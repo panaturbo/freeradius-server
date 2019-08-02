@@ -14,8 +14,8 @@
 \documentclass[$if(papersize)$$papersize$paper,$endif$12pt,twoside]{article}
 %
 $if(images)$
-\def\WordMarkFile{scripts/asciidoc/wordmark.pdf}
-\def\LogoFile{scripts/asciidoc/octopus.pdf}
+\def\WordMarkFile{scripts/pandoc/wordmark.pdf}
+\def\LogoFile{scripts/pandoc/octopus-clean.pdf}
 $else$
 \def\WordMarkFile{}
 \def\LogoFile{}

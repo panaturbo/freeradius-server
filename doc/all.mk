@@ -152,14 +152,12 @@ doc/%.pdf: doc/%.adoc
 	${Q}$(ASCIIDOCTOR) $< -b docbook5 -o - | \
 		$(PANDOC) -f docbook -t latex --${PANDOC_ENGINE}-engine=xelatex \
 			-V papersize=letter \
-			-V images=yes \
-			--template=./scripts/asciidoc/freeradius.template -o $@
+			-V images=yes  -o $@
 
 doc/%.pdf: doc/%.md
 	@echo PDF $^
 	${Q}$(PANDOC) -f markdown -t latex --${PANDOC_ENGINE}-engine=xelatex \
-		-V papersize=letter \
-		--template=./scripts/asciidoc/freeradius.template -o $@ $<
+		-V papersize=letter  -o $@ $<
 
 .PHONY: asciidoc html pdf clean clean.doc
 asciidoc: $(ADOC_FILES)
