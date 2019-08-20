@@ -1,0 +1,136 @@
+#  -*- text -*-
+#
+#
+#  $Id$
+
+#######################################################################
+#
+#  = Dict Module
+#
+#  Retrieve attributes from a dictionary.
+#
+#  ## Default instance
+#
+#  This module takes no configuration.
+#
+dict {
+
+}
+
+#
+#  ## Pre-defined Xlat's
+#
+#  ### %{attr:...}
+#
+#  Return the attribute name of an attribute reference.
+#
+#  .Return: _string_
+#
+#  .Example
+#
+#  [source,unlang]
+#  ----
+#  TODO
+#  ----
+#
+#  .Output
+#
+#  ```
+#  TODO
+#  ```
+#
+#  ### %{attr_by_num:...}
+#
+#  Return the attribute name of the ID number.
+#
+#  .Return: _string_
+#
+#  .Example
+#
+#  [source,unlang]
+#  ----
+#  TODO
+#  ----
+#
+#  .Output
+#
+#  ```
+#  TODO
+#  ```
+#
+#  ### %{attr_by_oid:...}
+#
+#  Return the attribute name of the OID number.
+#
+#  .Return: _string_
+#
+#  .Example
+#
+#  [source,unlang]
+#  ----
+#  TODO
+#  ----
+#
+#  .Output
+#
+#  ```
+#  TODO
+#  ```
+#
+#  ### %{attr_num:...}
+#
+#  Return the attribute number of an attribute reference.
+#
+#  .Return: _string_
+#
+#  .Example
+#
+#  [source,unlang]
+#  ----
+#  TODO
+#  ----
+#
+#  .Output
+#
+#  ```
+#  TODO
+#  ```
+#
+#  ### %{vendor:...}
+#
+#  Return the vendor of an attribute reference.
+#
+#  .Return: _string_
+#
+#  .Example
+#
+#  [source,unlang]
+#  ----
+#  TODO
+#  ----
+#
+#  .Output
+#
+#  ```
+#  TODO
+#  ```
+#
+#  ### %{vendor_num:...}
+#
+#  Return the vendor number of an attribute reference.
+#
+#  .Return: _string_
+#
+#  .Example
+#
+#  [source,unlang]
+#  ----
+#  TODO
+#  ----
+#
+#  .Output
+#
+#  ```
+#  TODO
+#  ```
+#
