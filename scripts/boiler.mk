@@ -28,6 +28,11 @@
 #       accomodate the double expansion that occurs when eval is invoked.
 
 #
+#  Coccinelle default command arguments
+#
+COCCINELLE_ARGS := --no-includes
+
+#
 #  You can watch what it's doing by:
 #
 #	$ VERBOSE=1 make ... args ...
@@ -177,6 +182,11 @@ endif
 
 define ADD_ANALYZE_RULE
 $${BUILD_DIR}/plist/%.plist: ${1}
+	${2}
+endef
+
+define ADD_ANALYZE_COCCINELLE
+$${BUILD_DIR}/coccinelle/%.cocci: ${1}
 	${2}
 endef
 
@@ -337,6 +347,16 @@ define ANALYZE_C_CMDS
 	$(Q)touch $@
 endef
 
+# COCCINELLE_C_CMDS - Commands for analyzing C source code with Coccinelle.
+define COCCINELLE_C_CMDS
+	$(Q)mkdir -p $(dir $@)
+	$(Q)$(ECHO) COCCINELLE $<
+	$(Q)for _cocci in scripts/coccinelle/*.cocci; do \
+            $(COCCINELLE_BIN) ${COCCINELLE_ARGS} --sp-file $${_cocci} $< || (rm -f $@ && false); \
+        done
+	$(Q)touch $@
+endef
+
 # COMPILE_CXX_CMDS - Commands for compiling C++ source code.
 define COMPILE_CXX_CMDS
 	$(Q)mkdir -p $(dir $@)
@@ -475,6 +495,10 @@ define INCLUDE_SUBMAKEFILE
 	PLISTS := $$(addprefix $${BUILD_DIR}/plist/,\
                    $$(addsuffix .plist,$$(basename $${SOURCES})))
 	ALL_PLISTS += ${PLISTS}
+
+	COCCI := $$(addprefix $${BUILD_DIR}/coccinelle/,\
+                   $$(addsuffix .cocci,$$(basename $${SOURCES})))
+	ALL_COCCI += ${COCCI}
 
         # Add the objects to the current target's list of objects, and create
         # target-specific variables for the objects based on any source
@@ -695,6 +719,9 @@ $(foreach EXT,${C_SRC_EXTS},\
   $(eval $(call ADD_ANALYZE_RULE,${EXT},$${ANALYZE_C_CMDS})))
 endif
 
+$(foreach EXT,${C_SRC_EXTS},\
+  $(eval $(call ADD_ANALYZE_COCCINELLE,${EXT},$${COCCINELLE_C_CMDS})))
+
 # Add pattern rule(s) for creating compiled object code from C++ source.
 $(foreach EXT,${CXX_SRC_EXTS},\
   $(eval $(call ADD_OBJECT_RULE,${EXT},$${COMPILE_CXX_CMDS})))
@@ -717,4 +744,18 @@ scan: ${ALL_PLISTS}
 clean.scan:
 	$(Q)rm -rf ${ALL_PLISTS}
 
-clean: clean.scan
+#  We're building a documentation target, but there's no "antora".
+#  Which we ONLY need for "docsite"
+ifeq "$(COCCINELLE_BIN)" ""
+ifneq "$(findstring coccinelle,$(MAKECMDGOALS))" ""
+$(error The 'spatch' (coccinelle) is required to check the source code)
+endif
+endif
+
+coccinelle: ${ALL_COCCI}
+
+.PHONY: clean.coccinelle
+clean.coccinelle:
+	$(Q)rm -rf ${ALL_COCCI}
+
+clean: clean.scan clean.coccinelle

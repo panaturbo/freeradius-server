@@ -133,6 +133,14 @@ if test "x$ac_cv_path_ANTORA" = "x"; then
 fi
 
 dnl #
+dnl # check for Coccinelle
+dnl #
+AC_PATH_PROG(COCCINELLE_BIN, spatch)
+if test "x$ac_cv_path_COCCINELLE_BIN" = "x"; then
+  AC_MSG_WARN([spatch not found - Please install the 'coccinelle' if you want analyzing C source code with scripts/coccinelle/*.cocci scripts])
+fi
+
+dnl #
 dnl #  Enable developer features like debugging symbols.
 dnl #  These checks must be done before expanding the AC_PROG_CC
 dnl #  and AC_PROG_CXX macros.
