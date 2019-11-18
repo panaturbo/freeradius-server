@@ -11,11 +11,11 @@ $(BUILD_DIR)/tests/trie:
 	${Q}mkdir -p $@
 
 $(BUILD_DIR)/tests/trie/trie-%: $(DIR)/% $(TESTBINDIR)/trie | $(BUILD_DIR)/tests/trie
-	@echo TRIE-TEST $(notdir $@)
+	@echo "TRIE-TEST $(notdir $@)"
 	@$(TESTBIN)/trie $^ > $@
 
 $(BUILD_DIR)/tests/trie/nopc-%: $(DIR)/% $(TESTBINDIR)/nopc | $(BUILD_DIR)/tests/trie
-	@echo TRIE-NO-PC-TEST $(notdir $@)
+	@echo "TRIE-NO-PC-TEST $(notdir $@)"
 	@$(TESTBIN)/nopc $^ > $@
 
 #

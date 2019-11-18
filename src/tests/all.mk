@@ -86,6 +86,31 @@ $(BUILD_DIR)/tests/autoconf.h.mk: src/include/autoconf.h | $(BUILD_DIR)/tests
 	${Q}grep '^#define' $^ | sed 's/#define /AC_/;s/ / := /' > $@
 -include $(BUILD_DIR)/tests/autoconf.h.mk
 
+#
+#  TODO
+#
+#	${Q}$(MAKE) test | tee -a $(BUILD_LOG)
+EXPECTED_TARGETS := AUTH-TEST    \
+		BIN-TEST     \
+		DICT-TEST    \
+		EAPOL-TEST   \
+		KEYWORD-TEST \
+		MAP-TEST     \
+		MODULE-TEST  \
+		RADMIN-TEST  \
+		UNIT-TEST    \
+		XLAT-TEST
+test.log:
+	$(eval BUILD_LOG := $(BUILD_DIR)/make.log)
+	@echo "(**) Saving the 'make' stdout in $(BUILD_LOG)"
+	${Q}$(MAKE) test | tee -a $(BUILD_LOG)
+	${Q}for _t in $(EXPECTED_TARGETS); do \
+		if ! grep -q "$${_t}" $(BUILD_LOG); then \
+			echo "WARNING: We didn't detected the execution of $${_t}"; \
+			exit 1; \
+		fi; \
+	done
+
 ######################################################################
 #
 #  Generic rules to set up the tests
