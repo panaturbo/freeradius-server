@@ -627,7 +627,7 @@ accounting {
 	#  Update the wtmp file
 	#
 	#  If you don't use "radlast", you can delete this line.
-	unix
+#	unix
 
 	#
 	#  For Simultaneous-Use tracking.
@@ -644,7 +644,7 @@ accounting {
 	#  Log traffic to an SQL database.
 	#
 	#  See "Accounting queries" in mods-available/sql
-	-sql
+	sql
 
 	#
 	#  If you receive stop packets with zero session length,
