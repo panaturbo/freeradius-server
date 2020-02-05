@@ -1180,6 +1180,12 @@ AC_CHECK_HEADERS(net/if.h, [], [],
 )
 
 dnl #
+dnl #  Handle coredumps on FreeBSD requires sys/procctl.h
+dnl #
+AC_CHECK_HEADERS(sys/procctl.h)
+AC_CHECK_FUNCS(procctl)
+
+dnl #
 dnl #  other checks which require headers
 dnl #
 if test "x$ac_cv_header_sys_security_h" = "xyes" && test "x$ac_cv_header_prot_h" = "xyes"
