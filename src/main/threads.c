@@ -752,13 +752,13 @@ static void *request_handler_thread(void *arg)
 		DEBUG2("Thread %d waiting to be assigned a request",
 		       self->thread_num);
 	re_wait:
-		if (sem_wait(&thread_pool.semaphore) != 0) {
+		if (sem_trywait(&thread_pool.semaphore) != 0) {
 			/*
 			 *	Interrupted system call.  Go back to
 			 *	waiting, but DON'T print out any more
 			 *	text.
 			 */
-			if (errno == EINTR) {
+			if (errno == EAGAIN) {
 				DEBUG2("Re-wait %d", self->thread_num);
 				goto re_wait;
 			}
